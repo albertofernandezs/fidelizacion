@@ -1,0 +1,15 @@
+Entrar en la carpeta del wildfly wildfly-18.0.1.Final\standalone\configuration
+
+y en standalone.xml en el apartado de datasource poner: 
+
+<datasource jndi-name="java:jboss/datasources/fidelizacion" pool-name="FidelizacionPostgres" enabled="true" use-java-context="true">
+                    <connection-url>jdbc:postgresql://localhost:5432/fidelizacion</connection-url>
+                    <driver>postgres</driver>
+                    <pool>
+                        <max-pool-size>20</max-pool-size>
+                    </pool>
+                    <security>
+                        <user-name>postgres</user-name>
+                        <password>postgres</password>
+                    </security>
+</datasource>
