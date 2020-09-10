@@ -21,7 +21,6 @@ import javax.transaction.UserTransaction;
 import py.com.progweb.prueba.model.Bolsa;
 import py.com.progweb.prueba.model.Cliente;
 
-
 @Stateless
 public class ClienteDAO {
 	@PersistenceContext(unitName = "fidelizacionPU")
@@ -30,10 +29,15 @@ public class ClienteDAO {
 	BolsaDAO bolsaDAO;
 	
 	
-	public void agregar(Cliente c) {
-		this.em.persist(c);
-		for(Bolsa b: c.getListaBolsa()) {
-			b.setCliente(c);
+	public void agregar(Cliente entidad) {
+		this.em.persist(entidad);
+	
+	}
+	
+	public void agregar_bolsa(Cliente entidad) {
+		this.em.persist(entidad);
+		for(Bolsa b: entidad.getListaBolsa()) {
+			b.setCliente(entidad);
 			bolsaDAO.agregar(b);
 		}
 	
@@ -44,4 +48,19 @@ public class ClienteDAO {
 		return (List<Cliente>) q.getResultList();
 		
 	}
+	public Cliente findById(Integer id) {
+        return em.find(Cliente.class, id);
+        
+    }
+	
+	public void eliminar(Cliente entidad) {
+	        if (!em.contains(entidad)) {
+	        	entidad = em.merge(entidad);
+	        }
+
+	         this.em.remove(entidad);
+	}
+	 public void actualizar(Cliente entidad) {
+	        this.em.merge(entidad);
+	 }
 }

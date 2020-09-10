@@ -2,12 +2,7 @@ package py.com.progweb.prueba.ejb;
 
 import java.util.List;
 
-import javax.annotation.ManagedBean;
-import javax.annotation.Resource;
-import javax.ejb.EJB;
-import javax.ejb.LocalBean;
-import javax.ejb.Remote;
-import javax.ejb.Stateful;
+
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
@@ -19,21 +14,23 @@ import javax.transaction.UserTransaction;
 
 import py.com.progweb.prueba.model.Bolsa;
 import py.com.progweb.prueba.model.Cliente;
+import py.com.progweb.prueba.model.UsoCabecera;
 
 
 @Stateless  
-public class BolsaDAO {
+public class UsoCabeceraDAO {
 	@PersistenceContext(unitName = "fidelizacionPU")
 	private EntityManager em;
 	
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
-	public void agregar(Bolsa b) {
-		this.em.persist(b);
+	public void agregar(UsoCabecera c) {
+		this.em.persist(c);
 	}
 	
-	public List<Bolsa> lista(){
-		Query q= this.em.createQuery("select b from Bolsa b");	
-		return (List<Bolsa>) q.getResultList();
+	public List<UsoCabecera> lista(){
+		Query q= this.em.createQuery("select u from Cabecera u");	
+		return (List<UsoCabecera>) q.getResultList();
 		
 	}
+
 }

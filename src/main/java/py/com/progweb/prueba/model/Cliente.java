@@ -11,17 +11,20 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import py.com.progweb.prueba.model.Bolsa;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import py.com.progweb.prueba.model.Bolsa;
+import py.com.progweb.prueba.model.UsoCabecera;
 @Entity
 @Table(name="cliente")
 
@@ -47,6 +50,7 @@ public class Cliente {
 	
 	@Column(name="tipo_documento", length = 50)
 	private String tipoDocumento;
+	
 	@Column(name="fecha_nacimiento")
 	@Temporal(TemporalType.DATE)
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
@@ -62,8 +66,12 @@ public class Cliente {
 	private Integer ci;
 	
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "cliente")
+	@Fetch(value = FetchMode.SUBSELECT)
 	private List<Bolsa> listaBolsa;
 	
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "cliente")
+	@Fetch(value = FetchMode.SUBSELECT)
+	private List<UsoCabecera> listaCabecera;
 	
 	public Cliente() {
 		
@@ -146,6 +154,14 @@ public class Cliente {
 
 	public void setListaBolsa(List<Bolsa> listaBolsa) {
 		this.listaBolsa = listaBolsa;
+	}
+
+	public List<UsoCabecera> getListaCabecera() {
+		return listaCabecera;
+	}
+
+	public void setListaCabecera(List<UsoCabecera> listaCabecera) {
+		this.listaCabecera = listaCabecera;
 	}
 	
 	

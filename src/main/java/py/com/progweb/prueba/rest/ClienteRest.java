@@ -23,6 +23,7 @@ import py.com.progweb.prueba.model.Cliente;
 
 
 
+
 @Path("cliente")
 @Consumes("application/json")
 @Produces("application/json")
@@ -74,5 +75,35 @@ public class ClienteRest {
 		this.clienteDAO.agregar(c);
 		return Response.ok().build();
 	}
+	
+	@GET
+    @Path("/{id}")
+    public Response getTodo(@PathParam("id") Integer id) {
+        Cliente cliente_elegido = clienteDAO.findById(id);
+        System.out.println("se ha encontrado: "+cliente_elegido.getNombre());
+        
+        return Response.ok(cliente_elegido).build();
+    }
+	
+	 @DELETE
+	 @Path("/{id}")
+	 public Response eliminar(@PathParam("id") Integer id) {
+	        Cliente cliente_elegido = clienteDAO.findById(id);
+	        
+	        clienteDAO.eliminar(cliente_elegido);
+
+	        return Response.ok().build();
+	 }
+	 
+	 @PUT
+	 @Path("/{id}")
+	 public Response update(@PathParam("id") Integer id, Cliente p) {
+	        Cliente cliente_elegido = clienteDAO.findById(id);
+
+	        cliente_elegido.setNombre(p.getNombre());
+	        cliente_elegido.setApellido(p.getApellido());
+	        clienteDAO.actualizar(cliente_elegido);
+	        return Response.ok().build();
+	 }
 
 }

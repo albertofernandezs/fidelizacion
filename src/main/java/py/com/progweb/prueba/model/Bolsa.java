@@ -45,17 +45,17 @@ public class Bolsa {
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	private Date fechaCaducidad;
 	
-	@Column(name="puntaje_utilizado", length = 50)
+	@Column(name="puntaje_utilizado")
 	private Float puntajeUtilizado;
 	
-	@Column(name="saldo_puntos", length = 50)
+	@Column(name="saldo_puntos")
 	private Float saldo;
 	
-	@Column(name="monto_inicial", length = 50)
+	@Column(name="monto_inicial")
 	private Float montoInicial;
 	
 	@JoinColumn(name="id_cliente", referencedColumnName = "id_cliente")
-	@ManyToOne(optional=false, fetch = FetchType.EAGER)
+	@ManyToOne(optional=false)
 	private Cliente cliente;
 
 	public Integer getIdBolsa() {
