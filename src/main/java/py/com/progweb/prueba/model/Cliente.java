@@ -65,12 +65,15 @@ public class Cliente {
 	@Basic(optional=false)
 	private Integer ci;
 	
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "cliente")
-	@Fetch(value = FetchMode.SUBSELECT)
+	@Column(name="total_puntos")
+	private Float totalPuntos ;
+	
+	@OneToMany( cascade = CascadeType.ALL, mappedBy = "cliente")
+	//@Fetch(value = FetchMode.SUBSELECT)
 	private List<Bolsa> listaBolsa;
 	
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "cliente")
-	@Fetch(value = FetchMode.SUBSELECT)
+	@OneToMany( cascade = CascadeType.ALL, mappedBy = "cliente")
+	//@Fetch(value = FetchMode.SUBSELECT)
 	private List<UsoCabecera> listaCabecera;
 	
 	public Cliente() {
@@ -163,6 +166,17 @@ public class Cliente {
 	public void setListaCabecera(List<UsoCabecera> listaCabecera) {
 		this.listaCabecera = listaCabecera;
 	}
+
+	public Float getTotalPuntos() {
+		return totalPuntos;
+	}
+
+	public void setTotalPuntos(Float totalPuntos) {
+		this.totalPuntos = totalPuntos;
+	}
+	
+	
+
 	
 	
 	

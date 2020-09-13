@@ -19,6 +19,7 @@ import javax.transaction.UserTransaction;
 
 import py.com.progweb.prueba.model.Bolsa;
 import py.com.progweb.prueba.model.Cliente;
+import py.com.progweb.prueba.model.Concepto;
 
 
 @Stateless  
@@ -26,14 +27,24 @@ public class BolsaDAO {
 	@PersistenceContext(unitName = "fidelizacionPU")
 	private EntityManager em;
 	
-	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	@Inject
+	ClienteDAO cl;
+	//@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public void agregar(Bolsa b) {
 		this.em.persist(b);
 	}
-	
+	public void agregar_cliente(Bolsa b, Integer id) {
+		Cliente c= cl.findById(id);
+		b.setCliente(c);
+		this.em.persist(b);
+	}
+	//@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public List<Bolsa> lista(){
 		Query q= this.em.createQuery("select b from Bolsa b");	
 		return (List<Bolsa>) q.getResultList();
 		
 	}
+	public void actualizar(Bolsa entidad) {
+        this.em.merge(entidad);
+ }
 }

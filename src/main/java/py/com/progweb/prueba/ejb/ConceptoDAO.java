@@ -1,5 +1,6 @@
 package py.com.progweb.prueba.ejb;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -9,6 +10,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import py.com.progweb.prueba.model.Concepto;
+import py.com.progweb.prueba.model.UsoCabecera;
 
 @Stateless
 public class ConceptoDAO {
@@ -17,6 +19,8 @@ public class ConceptoDAO {
 	private EntityManager em;
 	
 	public void agregar(Concepto entidad) {
+		List<UsoCabecera> listaCabecera= new ArrayList <UsoCabecera>();
+		entidad.setListaCabecera(listaCabecera);
 		this.em.persist(entidad);
 	
 	}

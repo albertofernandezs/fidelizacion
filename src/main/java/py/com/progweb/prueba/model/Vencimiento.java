@@ -27,13 +27,13 @@ public class Vencimiento {
 	@SequenceGenerator(name="concepto_sec", sequenceName = "concepto_sec", allocationSize = 0 )
 	private Integer idVencimiento;
 	
-	@Column(name="fecha_inicio")
+	@Column(name="inicio")
 	@Temporal(TemporalType.DATE)
 	@Basic(optional=false)
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	private Date fechaInicio;
 	
-	@Column(name="fecha_fin")
+	@Column(name="fin")
 	@Temporal(TemporalType.DATE)
 	@Basic(optional=false)
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")

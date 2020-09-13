@@ -21,13 +21,9 @@ import py.com.progweb.prueba.ejb.ClienteDAO;
 import py.com.progweb.prueba.model.Bolsa;
 import py.com.progweb.prueba.model.Cliente;
 
-
-
-
 @Path("cliente")
 @Consumes("application/json")
 @Produces("application/json")
-
 public class ClienteRest {
 	
 	@Inject

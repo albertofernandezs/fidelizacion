@@ -40,5 +40,18 @@ public class ReglaDAO {
 	 public void actualizar(Reglas entidad) {
 	        this.em.merge(entidad);
 	 }
+	 
+	 public float monto(float cantidad) {
+		 float total=0;
+		 Query q= this.em.createQuery("select r from Reglas r");
+		 for(Reglas r: (List<Reglas>)q.getResultList()) {
+			 if(r.getInferior()<= cantidad && r.getSuperior() >= cantidad) {
+				 total=r.getMonto();
+				 break;
+			 }
+		 }
+		 return total;
+		 
+	 }
 
 }

@@ -1,13 +1,16 @@
 package py.com.progweb.prueba.model;
 
 
+import java.util.List;
+
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -30,6 +33,10 @@ public class Concepto {
 	
 	@Column(name="puntos")
 	private Float puntos;
+	
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "concepto")
+	//@Fetch(value = FetchMode.SUBSELECT)
+	private List<UsoCabecera> listaCabecera;
 
 
 	public Integer getIdConcepto() {
@@ -60,6 +67,17 @@ public class Concepto {
 	public void setPuntos(Float puntos) {
 		this.puntos = puntos;
 	}
+
+
+	public List<UsoCabecera> getListaCabecera() {
+		return listaCabecera;
+	}
+
+
+	public void setListaCabecera(List<UsoCabecera> listaCabecera) {
+		this.listaCabecera = listaCabecera;
+	}
+	
 	
 	
 	

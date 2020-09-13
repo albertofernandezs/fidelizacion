@@ -1,5 +1,6 @@
 package py.com.progweb.prueba.model;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -18,6 +19,9 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -46,17 +50,41 @@ public class Bolsa {
 	private Date fechaCaducidad;
 	
 	@Column(name="puntaje_utilizado")
+	@Basic(optional=false)
 	private Float puntajeUtilizado;
 	
 	@Column(name="saldo_puntos")
+	@Basic(optional=false)
 	private Float saldo;
 	
 	@Column(name="monto_inicial")
+	@Basic(optional=false)
 	private Float montoInicial;
 	
 	@JoinColumn(name="id_cliente", referencedColumnName = "id_cliente")
 	@ManyToOne(optional=false)
 	private Cliente cliente;
+
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "bolsa")
+	//@Fetch(value = FetchMode.SUBSELECT)
+	private List<UsoDetalle> listaDetalle;
+	
+	
+	
+	public Bolsa() {
+		this.listaDetalle= new ArrayList<UsoDetalle>();
+	}
+
+	public Bolsa( Date fechaAsignacion, Date fechaCaducidad, Float saldo,
+			Float montoInicial) {
+		super();
+		this.fechaAsignacion = fechaAsignacion;
+		this.fechaCaducidad = fechaCaducidad;
+		this.puntajeUtilizado = 0.0f;
+		this.saldo = saldo;
+		this.montoInicial = montoInicial;
+		this.listaDetalle= new ArrayList<UsoDetalle>();
+	}
 
 	public Integer getIdBolsa() {
 		return idBolsa;
@@ -113,6 +141,16 @@ public class Bolsa {
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
 	}
+
+	public List<UsoDetalle> getListaDetalle() {
+		return listaDetalle;
+	}
+
+	public void setListaDetalle(List<UsoDetalle> listaDetalle) {
+		this.listaDetalle = listaDetalle;
+	}
+	
+	
 	
 	
 }

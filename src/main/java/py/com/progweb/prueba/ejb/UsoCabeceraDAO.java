@@ -22,7 +22,7 @@ public class UsoCabeceraDAO {
 	@PersistenceContext(unitName = "fidelizacionPU")
 	private EntityManager em;
 	
-	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	//@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public void agregar(UsoCabecera c) {
 		this.em.persist(c);
 	}
@@ -32,5 +32,8 @@ public class UsoCabeceraDAO {
 		return (List<UsoCabecera>) q.getResultList();
 		
 	}
+	 public void actualizar(UsoCabecera entidad) {
+	        this.em.merge(entidad);
+	 }
 
 }

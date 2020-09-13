@@ -1,5 +1,6 @@
 package py.com.progweb.prueba.model;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -18,6 +19,9 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -43,8 +47,33 @@ public class UsoCabecera {
 	private Float puntajeUtilizado;
 	
 	@JoinColumn(name="id_cliente", referencedColumnName = "id_cliente")
-	@ManyToOne(optional=false, fetch = FetchType.EAGER)
+	@ManyToOne(optional=false)
 	private Cliente cliente;
+	
+	@JoinColumn(name="id_concepto", referencedColumnName = "id_concepto")
+	@ManyToOne(optional=false)
+	private Concepto concepto;
+	
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "cabecera")
+	//@Fetch(value = FetchMode.SUBSELECT)
+	private List<UsoDetalle> listaDetalle;
+
+	
+	
+
+	public UsoCabecera() {
+		
+	}
+	
+	public UsoCabecera(Date fechaUso, Float puntajeUtilizado, Cliente cliente, Concepto concepto) {
+		super();
+		this.fechaUso = fechaUso;
+		this.puntajeUtilizado = puntajeUtilizado;
+		this.cliente = cliente;
+		this.listaDetalle= new ArrayList<UsoDetalle>();
+		this.concepto=concepto;
+	}
+
 
 	public Integer getIdCabecera() {
 		return idCabecera;
@@ -77,6 +106,28 @@ public class UsoCabecera {
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
 	}
+
+	public List<UsoDetalle> getListaDetalle() {
+		return listaDetalle;
+	}
+
+	public void setListaDetalle(List<UsoDetalle> listaDetalle) {
+		this.listaDetalle = listaDetalle;
+	}
+
+
+	public Concepto getConcepto() {
+		return concepto;
+	}
+
+
+	public void setConcepto(Concepto concepto) {
+		this.concepto = concepto;
+	}
+	
+	
+	
+	
 	
 	
 }

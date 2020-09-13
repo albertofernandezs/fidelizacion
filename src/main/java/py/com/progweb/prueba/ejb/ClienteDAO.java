@@ -30,6 +30,7 @@ public class ClienteDAO {
 	
 	
 	public void agregar(Cliente entidad) {
+		entidad.setTotalPuntos(0.0f);
 		this.em.persist(entidad);
 	
 	}
@@ -43,11 +44,13 @@ public class ClienteDAO {
 	
 	}
 	
+	//@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public List<Cliente> lista(){
 		Query q= this.em.createQuery("select c from Cliente c");	
 		return (List<Cliente>) q.getResultList();
 		
 	}
+	//@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public Cliente findById(Integer id) {
         return em.find(Cliente.class, id);
         
