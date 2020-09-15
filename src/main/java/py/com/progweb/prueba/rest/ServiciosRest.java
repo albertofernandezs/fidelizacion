@@ -35,6 +35,7 @@ import py.com.progweb.prueba.model.Cliente;
 import py.com.progweb.prueba.model.Concepto;
 import py.com.progweb.prueba.model.UsoCabecera;
 import py.com.progweb.prueba.model.UsoDetalle;
+import py.com.progweb.prueba.notificacion.DJCorreoTexto;
 
 @Path("servicios")
 @Consumes("application/json")
@@ -61,6 +62,9 @@ public class ServiciosRest {
 
 	@Inject
 	private UsoDetalleDAO detalleDAO;
+	
+	@Inject
+	private DJCorreoTexto email;
 	
 	
 	
@@ -92,11 +96,10 @@ public class ServiciosRest {
 		System.out.println("el cliente eeeeeeeeeeeeeeeeeee "+cliente.getIdCliente());
 		cliente.setTotalPuntos(cliente.getTotalPuntos() + puntos);
 		bolsa.setCliente(cliente);
-		//this.clienteDAO.actualizar(cliente);
-		System.out.println("el cliente eeeeeeeeeeeeeeeeeee bolsa"+bolsa.getCliente().getIdCliente());
 		this.bolsaDAO.agregar(bolsa);
-		System.out.println("El cliente tiene actualmente: " + cliente.getTotalPuntos() + " puntos");
 		this.clienteDAO.actualizar(cliente);
+		String mensaje="Por su valor de consumo de "+monto+" se han agregado"+puntos+" puntos en su bolsa personal";
+		//this.email.mandarCorreo(cliente.getEmail(), mensaje);
 		return Response.ok(bolsa).build();
 	}
 

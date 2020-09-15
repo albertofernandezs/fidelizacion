@@ -26,7 +26,7 @@ public class UsoDetalleDAO {
 	}
 	
 	public List<UsoDetalle> lista(){
-		Query q= this.em.createQuery("select d from Detalle d");	
+		Query q= this.em.createQuery("select d from UsoDetalle d");	
 		return (List<UsoDetalle>) q.getResultList();
 		
 	}

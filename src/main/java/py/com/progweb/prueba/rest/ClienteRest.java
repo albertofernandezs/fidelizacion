@@ -20,7 +20,6 @@ import javax.ws.rs.core.Response;
 import py.com.progweb.prueba.ejb.ClienteDAO;
 import py.com.progweb.prueba.model.Bolsa;
 import py.com.progweb.prueba.model.Cliente;
-
 @Path("cliente")
 @Consumes("application/json")
 @Produces("application/json")
@@ -32,6 +31,7 @@ public class ClienteRest {
 	@GET
 	@Path("/")
 	public Response listar() throws Exception{
+		
 		ArrayList resultado=new ArrayList();
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		
