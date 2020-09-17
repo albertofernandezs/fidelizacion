@@ -1,5 +1,7 @@
 package py.com.progweb.prueba.rest;
 
+import java.util.Objects;
+
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -58,9 +60,11 @@ public class ReglaRest {
 	 
 	 @PUT
 	 @Path("/{id}")
-	 public Response update(@PathParam("id") Integer id, Reglas p) {
-	        Reglas regla_elegido = reglaDAO.findById(id);
-	        reglaDAO.actualizar(regla_elegido);
+	 public Response update(@PathParam("id") Integer id, Reglas p) throws Exception {
+		 if (!Objects.equals(id, p.getIdRegla())) {
+	            throw new Exception("Propiedad 'id de Objeto Locale debe coincidir con el parámetro mandado.");
+	        }
+	        reglaDAO.actualizar(p);
 	        return Response.ok().build();
 	 }
 

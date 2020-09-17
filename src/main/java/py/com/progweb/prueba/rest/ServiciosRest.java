@@ -98,9 +98,9 @@ public class ServiciosRest {
 		bolsa.setCliente(cliente);
 		this.bolsaDAO.agregar(bolsa);
 		this.clienteDAO.actualizar(cliente);
-		String mensaje="Por su valor de consumo de "+monto+" se han agregado"+puntos+" puntos en su bolsa personal";
+		String mensaje="Por su valor de consumo de "+monto+" se han agregado "+puntos+" puntos en su bolsa personal";
 		//this.email.mandarCorreo(cliente.getEmail(), mensaje);
-		return Response.ok(bolsa).build();
+		return Response.status(200).build();
 	}
 
 	@POST

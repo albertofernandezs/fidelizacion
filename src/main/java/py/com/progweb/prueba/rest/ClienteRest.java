@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -93,12 +94,13 @@ public class ClienteRest {
 	 
 	 @PUT
 	 @Path("/{id}")
-	 public Response update(@PathParam("id") Integer id, Cliente p) {
+	 public Response update(@PathParam("id") Integer id, Cliente p) throws Exception {
+		 if (!Objects.equals(id, p.getIdCliente())) {
+	            throw new Exception("Propiedad 'id de Objeto Locale debe coincidir con el parámetro mandado.");
+	        }
 	        Cliente cliente_elegido = clienteDAO.findById(id);
-
-	        cliente_elegido.setNombre(p.getNombre());
-	        cliente_elegido.setApellido(p.getApellido());
-	        clienteDAO.actualizar(cliente_elegido);
+	        p.setTotalPuntos(cliente_elegido.getTotalPuntos());
+	        clienteDAO.actualizar(p);
 	        return Response.ok().build();
 	 }
 

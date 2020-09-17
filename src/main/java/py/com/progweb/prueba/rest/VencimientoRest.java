@@ -1,5 +1,7 @@
 package py.com.progweb.prueba.rest;
 
+import java.util.Objects;
+
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -60,9 +62,11 @@ public class VencimientoRest {
 	 
 	 @PUT
 	 @Path("/{id}")
-	 public Response update(@PathParam("id") Integer id, Vencimiento p) {
-	        Vencimiento vencimiento_elegido = vencimientoDAO.findById(id);
-	        vencimientoDAO.actualizar(vencimiento_elegido);
+	 public Response update(@PathParam("id") Integer id, Vencimiento p) throws Exception {
+		 if (!Objects.equals(id, p.getIdVencimiento())) {
+	            throw new Exception("Propiedad 'id de Objeto Locale debe coincidir con el parámetro mandado.");
+	        }
+	        vencimientoDAO.actualizar(p);
 	        return Response.ok().build();
 	 }
 

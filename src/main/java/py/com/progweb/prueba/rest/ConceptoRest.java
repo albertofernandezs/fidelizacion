@@ -1,5 +1,7 @@
 package py.com.progweb.prueba.rest;
 
+import java.util.Objects;
+
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -60,9 +62,11 @@ public class ConceptoRest {
 	 
 	 @PUT
 	 @Path("/{id}")
-	 public Response update(@PathParam("id") Integer id, Concepto p) {
-	        Concepto concepto_elegido = conceptoDAO.findById(id);
-	        conceptoDAO.actualizar(concepto_elegido);
+	 public Response update(@PathParam("id") Integer id, Concepto p) throws Exception {
+		 if (!Objects.equals(id, p.getIdConcepto())) {
+	            throw new Exception("Propiedad 'id de Objeto Locale debe coincidir con el parámetro mandado.");
+	        }
+	        conceptoDAO.actualizar(p);
 	        return Response.ok().build();
 	 }
 
