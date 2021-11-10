@@ -1,5 +1,18 @@
-Creacion de la Base de Datos
-==========
+# Sistema de fidelizacion de clientes
+
+Es la implementacion de un sistema fidelización de clientes que puede hacer un seguimiento de los puntos otorgados por operaciones de pago. 
+
+## Informacion
+
+* Stack tecnologico: 
+    * Modelo JPA: Hibernate
+    * Capa de negocios: EJB3
+    * Capa de exposición: JAX-RS (Restful)
+* Gestor de proyectos MAVEN
+* Servidor de aplicaciones WildFly
+
+
+## Creacion de la Base de Datos
 
 Crear una base de datos en postgres con el nombre "fidelizacion", luego agregar las siguientes tablas:
 ~~~~sql
@@ -93,7 +106,7 @@ CREATE SEQUENCE public.regla_sec;
 CREATE SEQUENCE public.vencimiento_sec;
 ~~~~
 
-# Configurar el WildFly:
+## Configurar el WildFly:
 Ir en la carpeta raiz del Wildfly, luego en la carpreta standalone\configuration, agregar en el archivo standalone.xml el siguiente datasource:
 ```
 
@@ -110,3 +123,29 @@ Ir en la carpeta raiz del Wildfly, luego en la carpreta standalone\configuration
 </datasource>
 ```
 En el apartado de user-name y password agregar el usuario y contraseña de la cuenta del administrador del postgres
+
+## Estructura del sistema de fidelizacion de clientes
+
+1. Administración de datos del cliente: Este módulo contempla la administración de datos del cliente, los cuales serán los que
+acumulen puntos de fidelidad con sus operaciones.
+
+2. Administración de conceptos de uso de puntos: Este módulo contempla la administración de los diferentes conceptos que especifican a qué
+fueron destinados los puntos utilizados, con su respectiva cantidad de puntos requerida. Por
+ejemplo: vale de premio, vale de descuento, vale de consumición, etc.
+
+3. Administración de reglas de asignación de puntos: Este módulo permite definir las reglas que rigen la cantidad de puntos a asignar a un cliente
+en base al rango de valor de consumo
+
+4. Parametrización de vencimientos de puntos: Este módulo permite definir el tiempo de validez de los puntajes asignados a los clientes. Una
+vez alcanzado el tiempo determinado, los puntos son descontados de la bolsa por vencimiento.
+
+5. Bolsa de puntos: Una bolsa con la cantidad total de puntos asignados a un cliente
+
+6. Uso de puntos: Es una operacion que describe el uso de puntos en la bolsa de puntos del cliente.
+
+## Servicios
+
+- carga de puntos (POST): se recibe el identificador de cliente y el monto de la operación, y se asigna los puntos 
+- utilizar puntos (POST): se recibe el identificador del cliente y el identificador del concepto de uso y se descuenta dicho puntaje al cliente registrando el uso de puntos
+o además debe enviar un correo electrónico al cliente como comprobante
+- consultar cuantos puntos equivale a un monto X (GET): es un servicio informativo que devuelve la cantidad de puntos equivalente al monto proporcionado como parámetro
